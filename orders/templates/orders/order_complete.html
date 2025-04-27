@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}注文完了{% endblock %}
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <div class="mb-6">
+                    <svg class="mx-auto h-12 w-12 text-green-500"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold mb-4">注文が完了しました</h1>
+                <p class="text-gray-600 mb-6">
+                    ご注文ありがとうございました。
+                    <br>
+                    注文内容の確認メールをお送りしましたので、ご確認ください。
+                </p>
+                <div class="space-y-4">
+                    <a href="{% url 'products:product_list' %}"
+                       class="inline-block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                        商品一覧に戻る
+                    </a>
+                    <a href="{% url 'accounts:detail' %}"
+                       class="inline-block w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        注文履歴を確認
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

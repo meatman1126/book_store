@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}注文確認{% endblock %}
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h1 class="text-2xl font-bold mb-6">注文内容の確認</h1>
+                <!-- カートの商品一覧 -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold mb-4">注文商品</h2>
+                    {% for item in cart_items %}
+                        <div class="flex items-center border-b border-gray-200 py-4">
+                            <div class="w-20 h-20 mr-4">
+                                <img src="{{ item.product.image.url }}"
+                                     alt="{{ item.product.name }}"
+                                     class="w-full h-full object-cover rounded"
+                                     width="80"
+                                     height="80">
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-medium">{{ item.product.name }}</h3>
+                                <p class="text-gray-600">{{ item.product.category.name }}</p>
+                                <p class="text-gray-900 font-medium">¥{{ item.product.price|floatformat:0 }}</p>
+                                <p class="text-gray-600">数量: {{ item.quantity }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- 合計金額 -->
+                <div class="mb-8">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-semibold">合計金額</span>
+                        <span class="text-xl font-bold">¥{{ total_price|floatformat:0 }}</span>
+                    </div>
+                </div>
+                <!-- 配送情報 -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold mb-4">配送情報</h2>
+                    <div class="space-y-2">
+                        <p>
+                            <span class="font-medium">お名前:</span> {{ order_info.shipping_name }}
+                        </p>
+                        <p>
+                            <span class="font-medium">電話番号:</span> {{ order_info.shipping_phone }}
+                        </p>
+                        <p>
+                            <span class="font-medium">配送先:</span> {{ order_info.shipping_address }}
+                        </p>
+                        <p>
+                            <span class="font-medium">支払い方法:</span> {{ payment_method_display }}
+                        </p>
+                    </div>
+                </div>
+                <!-- 注文ボタン -->
+                <form method="post" action="{% url 'orders:order_confirm' %}">
+                    {% csrf_token %}
+                    <div class="flex justify-between">
+                        <a href="{% url 'orders:order_create' %}"
+                           class="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">戻る</a>
+                        <button type="submit"
+                                class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            注文を確定する
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

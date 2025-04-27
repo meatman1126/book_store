@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}ユーザー情報{% endblock %}
+{% block content %}
+    <div class="min-h-screen bg-gray-100 py-6 flex flex-col">
+        <div class="relative py-2">
+            <div class="relative px-2 py-5 bg-white shadow-lg rounded-3xl">
+                <div class="max-w-md mx-auto">
+                    <div class="divide-y divide-gray-200">
+                        <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                            <h2 class="text-2xl font-bold mb-6 text-center">ユーザー情報</h2>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">メールアドレス</label>
+                                <p class="text-gray-900">{{ user.email }}</p>
+                            </div>
+                            <div class="mb-4">
+                                <!-- <label class="block text-gray-700 text-sm font-bold mb-2">ユーザー名</label> -->
+                                <label class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">ユーザー名</label>
+                                <p class="text-gray-900">{{ user.username }}</p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">名前</label>
+                                <p class="text-gray-900">{{ user.get_full_name|default:"未設定" }}</p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">電話番号</label>
+                                <p class="text-gray-900">{{ user.phone_number|default:"未設定" }}</p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">住所</label>
+                                <p class="text-gray-900">{{ user.address|default:"未設定" }}</p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">登録日</label>
+                                <p class="text-gray-900">{{ user.date_joined|date:"Y年m月d日" }}</p>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">最終更新日</label>
+                                <p class="text-gray-900">{{ user.updated_at|date:"Y年m月d日" }}</p>
+                            </div>
+                            <div class="flex space-x-4">
+                                <a href="{% url 'accounts:edit' %}"
+                                   class="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-center">
+                                    編集する
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

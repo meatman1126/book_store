@@ -1,0 +1,12 @@
+{
+  "name": "book_store",
+  "version": "1.0.0",
+  "description": "Django book store project",
+  "scripts": {
+    "build:css": "tailwindcss -i ./static/src/input.css -o ./static/dist/output.css --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.4",
+    "tailwindcss": "^4.1.4"
+  }
+}

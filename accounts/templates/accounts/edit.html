@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}ユーザー情報編集{% endblock %}
+{% block content %}
+    <div class="min-h-screen bg-gray-100 py-6 flex flex-col">
+        <div class="relative py-2">
+            <div class="relative px-2 py-5 bg-white shadow-lg rounded-3xl">
+                <div class="max-w-md mx-auto">
+                    <div class="divide-y divide-gray-200">
+                        <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                            <h2 class="text-2xl font-bold mb-6 text-center">ユーザー情報編集</h2>
+                            <form method="post" class="space-y-4">
+                                {% csrf_token %}
+                                {% if form.non_field_errors %}
+                                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                                         role="alert">
+                                        {% for error in form.non_field_errors %}<span class="block sm:inline">{{ error }}</span>{% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="mb-4">
+                                    <label for="{{ form.first_name.id_for_label }}"
+                                           class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">
+                                        名
+                                    </label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        <div class="mt-1 text-sm text-red-600">
+                                            {% for error in form.first_name.errors %}<p>{{ error }}</p>{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="mb-4">
+                                    <label for="{{ form.last_name.id_for_label }}"
+                                           class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">
+                                        姓
+                                    </label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                        <div class="mt-1 text-sm text-red-600">
+                                            {% for error in form.last_name.errors %}<p>{{ error }}</p>{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="mb-4">
+                                    <label for="{{ form.phone_number.id_for_label }}"
+                                           class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">
+                                        電話番号
+                                    </label>
+                                    {{ form.phone_number }}
+                                    {% if form.phone_number.errors %}
+                                        <div class="mt-1 text-sm text-red-600">
+                                            {% for error in form.phone_number.errors %}<p>{{ error }}</p>{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="mb-4">
+                                    <label for="{{ form.address.id_for_label }}"
+                                           class="block text-gray-700 text-sm font-bold mb-2 before:content-['◾️'] before:mr-1">
+                                        住所
+                                    </label>
+                                    {{ form.address }}
+                                    {% if form.address.errors %}
+                                        <div class="mt-1 text-sm text-red-600">
+                                            {% for error in form.address.errors %}<p>{{ error }}</p>{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="flex space-x-4">
+                                    <button type="submit"
+                                            class="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        更新
+                                    </button>
+                                    <a href="{% url 'accounts:detail' %}"
+                                       class="flex-1 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-center">
+                                        キャンセル
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

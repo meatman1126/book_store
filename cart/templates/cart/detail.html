@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}ショッピングカート{% endblock %}
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-bold mb-6">ショッピングカート</h1>
+        {% if items %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="divide-y divide-gray-200">
+                    {% for item in items %}
+                        <div class="p-4 flex items-center">
+                            <div class="flex-shrink-0 w-24 h-24">
+                                {% if item.product.image %}
+                                    <img src="{{ item.product.image.url }}"
+                                         alt="{{ item.product.name }}"
+                                         class="w-full h-full object-contain bg-gray-100"
+                                         width="96"
+                                         height="96">
+                                {% else %}
+                                    <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                                        <span class="text-gray-400">No image</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <h2 class="text-lg font-semibold">
+                                    <a href="{% url 'products:product_detail' item.product.id item.product.slug %}"
+                                       class="text-gray-900 hover:text-blue-600">{{ item.product.name }}</a>
+                                </h2>
+                                <p class="text-gray-600">{{ item.product.category.name }}</p>
+                                <p class="text-gray-900 font-semibold mt-2">¥{{ item.price_at_added|floatformat:0 }}</p>
+                            </div>
+                            <div class="ml-4">
+                                <form action="{% url 'cart:update_cart_item' item.id %}"
+                                      method="post"
+                                      class="flex items-center">
+                                    {% csrf_token %}
+                                    <div class="flex items-center">
+                                        <label for="quantity-{{ item.id }}" class="text-gray-700 mr-2">数量:</label>
+                                        <input type="number"
+                                               id="quantity-{{ item.id }}"
+                                               name="quantity"
+                                               value="{{ item.quantity }}"
+                                               min="1"
+                                               max="99"
+                                               class="w-20 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                    <button type="submit"
+                                            class="ml-2 px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer">
+                                        更新
+                                    </button>
+                                </form>
+                                <form action="{% url 'cart:remove_from_cart' item.id %}"
+                                      method="post"
+                                      class="mt-2">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            class="text-red-600 hover:text-red-800 focus:outline-none cursor-pointer">
+                                        削除
+                                    </button>
+                                </form>
+                                <div class="mt-2 text-right">
+                                    <span class="text-gray-700">小計:</span>
+                                    <span class="font-semibold ml-2">¥{{ item.get_total_price|floatformat:0 }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="p-4 bg-gray-50 border-t border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-gray-700">合計点数:</span>
+                            <span class="font-semibold ml-2">{{ total_items }}点</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-700">合計金額:</span>
+                            <span class="font-semibold ml-2">¥{{ total_price|floatformat:0 }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end space-x-4">
+                <a href="{% url 'products:product_list' %}"
+                   class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">買い物を続ける</a>
+                <a href="{% url 'orders:order_create' %}"
+                   class="px-4 py-2 border bg-blue-600 text-white rounded-md hover:bg-blue-700">レジに進む</a>
+            </div>
+        {% else %}
+            <div class="text-center py-12">
+                <p class="text-gray-600 mb-4">カートに商品がありません。</p>
+                <a href="{% url 'products:product_list' %}"
+                   class="text-blue-600 hover:text-blue-800">商品一覧へ</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
